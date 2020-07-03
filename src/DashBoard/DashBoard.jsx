@@ -8,7 +8,6 @@ import Loading from '../Loading/Loading';
 import '../styles/DashBoard.scss';
 import { List } from 'antd';
 
-
 const DashBoard = (props) => {
 
     const history = useHistory();

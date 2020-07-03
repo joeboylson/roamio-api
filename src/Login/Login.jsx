@@ -25,45 +25,34 @@ const Login = () => {
 
     const loginFailed = () => message.error("Invalid username or password")
 
-    const layout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
-    };
-
-    const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
-    };
-
     return (
         <div id={'login'}>
 
             <Form
-                { ...layout }
-                name="basic"
+                layout={'vertical'}
+                name={'basic'}
                 initialValues={{ remember: true }}
                 onFinish={login}
                 onFinishFailed={loginFailed}
             >
                 <Form.Item
-                    label="Username"
-                    name="username"
+                    label={'Username'}
+                    name={'username'}
                     rules={[{ required: true }]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label="Password"
-                    name="password"
+                    label={'Password'}
+                    name={'password'}
                     rules={[{ required: true,  }]}
                 >
                     <Input.Password />
                 </Form.Item>
 
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                    Submit
-                    </Button>
+                <Form.Item>
+                    <Button type={'primary'} htmlType={'submit'}>Submit</Button>
                 </Form.Item>
             </Form>
 
