@@ -5,11 +5,8 @@
     display: grid;
     place-items: center;
 
-    .ant-input {
-        margin-bottom: 18px;
-    }
-
-    .ant-btn {
-        width: 100%;
+    .ant-form {
+        width: 50%;
+        min-width: 300px;
     }
 }

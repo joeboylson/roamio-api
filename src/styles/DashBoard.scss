@@ -12,12 +12,15 @@
             width: $menu-width;
 
             #menu-inner-header {
-                // background-color: #011528;
+                margin-left: 24px;
                 height: 68px;
+                display: flex;
+                align-items: center;
             }
 
             .ant-list {
-                height: calc(100vh - 89px - 89px)
+                height: calc(100vh - 89px);
+                margin-left: 24px;
             }
         }
     }

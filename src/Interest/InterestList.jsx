@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import { PageHeader, Button, Table, message } from 'antd';
+import { PageHeader, Table, message } from 'antd';
 
 import '../styles/InterestList.scss'
 const InterestList = (props) => {
@@ -9,12 +9,6 @@ const InterestList = (props) => {
   const { setLoading } = props;
   const history = useHistory();
   const [dataSource, setDataSource] = React.useState(null);
-
-
-  const logOut = () => {
-    axios.get('/api/logout');
-    history.push('/login');
-  }
 
   const fetchAllInterests = () => {
     setLoading(true)
@@ -28,7 +22,6 @@ const InterestList = (props) => {
       }
 
       if (!results.data.success) {
-        // TODO: throw error message here
         message.error('Error getting interest data')
         return;
       }
@@ -39,9 +32,11 @@ const InterestList = (props) => {
     })
   }
 
-  if (!dataSource) {
-      fetchAllInterests()
-  }
+  React.useEffect(() => {
+    if (!dataSource) {
+        fetchAllInterests()
+    }
+  }, [])
 
   const columns = [
     {
@@ -72,16 +67,15 @@ const InterestList = (props) => {
     <div id="interest-list">
       <PageHeader
         title="Interest List"
-        extra={[ 
-          // <Button key="1" type={'primary'} onClick={downloadCSV}>Download CSV</Button>,
-          <a href="/api/download/interests" download>DOWNLOAD CSV</a>,
-          <Button key="2" type={'danger'} onClick={logOut}>Log Out</Button>
+        extra={[
+          <a key={'0'} href="/api/download/interests" download>DOWNLOAD CSV</a>,
         ]}
       >
 
         <Table 
           dataSource={dataSource} 
           columns={columns}
+          rowKey={record => record.id}
           pagination={false}
           size={'middle'}
         />

@@ -1,22 +1,18 @@
 import React from 'react';
 import axios from 'axios';
-import { Input, Button, message } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { useHistory } from "react-router-dom";
 
 import '../styles/Login.scss'
 
-const App = () => {
+const Login = () => {
 
     const history = useHistory();
 
-    const [username, setUsername] = React.useState('username');
-    const [password, setPassword] = React.useState('admin');
-
-    const login = () => {
+    const login = (values) => {
         const url = '/api/login'
-        const data = {username, password}
-    
-        axios.post(url, data)
+
+        axios.post(url, values)
         .then(response => {
             if (!response.data || !response.data.success) {
                 message.error("Invalid username or password")
@@ -27,31 +23,52 @@ const App = () => {
         })
     }
 
+    const loginFailed = () => message.error("Invalid username or password")
+
+    const layout = {
+        labelCol: { span: 8 },
+        wrapperCol: { span: 16 },
+    };
+
+    const tailLayout = {
+        wrapperCol: { offset: 8, span: 16 },
+    };
+
     return (
         <div id={'login'}>
 
-            <div id={'input-wrapper'}>
+            <Form
+                { ...layout }
+                name="basic"
+                initialValues={{ remember: true }}
+                onFinish={login}
+                onFinishFailed={loginFailed}
+            >
+                <Form.Item
+                    label="Username"
+                    name="username"
+                    rules={[{ required: true }]}
+                >
+                    <Input />
+                </Form.Item>
 
-                <Input 
-                    placeholder={'username'} 
-                    onChange={e => setUsername(e.target.value)}
-                />
-                
-                <Input 
-                    placeholder={'password'} 
-                    type="text" 
-                    onChange={e => setPassword(e.target.value)}
-                />
+                <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[{ required: true,  }]}
+                >
+                    <Input.Password />
+                </Form.Item>
 
-                <Button 
-                    onClick={login}
-                    type={'primary'}
-                >LOGIN</Button>
-
-            </div>
+                <Form.Item {...tailLayout}>
+                    <Button type="primary" htmlType="submit">
+                    Submit
+                    </Button>
+                </Form.Item>
+            </Form>
 
         </div>
     )
 }
 
-export default App;
+export default Login;
