@@ -1,0 +1,15 @@
+@import './main.scss';
+
+#login {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+
+    .ant-input {
+        margin-bottom: 18px;
+    }
+
+    .ant-btn {
+        width: 100%;
+    }
+}

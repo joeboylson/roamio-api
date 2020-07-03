@@ -1,0 +1,28 @@
+#dashboard {
+    display: flex;
+
+    #menu {
+
+        $menu-width: 20%;
+
+        flex: 0 0 $menu-width;
+
+        #menu-inner {
+            position: fixed;
+            width: $menu-width;
+
+            #menu-inner-header {
+                // background-color: #011528;
+                height: 68px;
+            }
+
+            .ant-list {
+                height: calc(100vh - 89px - 89px)
+            }
+        }
+    }
+
+    #component-wrapper {
+        flex: 0 0 80%;
+    }
+}

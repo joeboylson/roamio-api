@@ -1,0 +1,22 @@
+.loading {
+
+    position: fixed;
+    z-index: +1;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #EEE;
+    padding: 34px 55px;
+
+    display: grid;
+    place-items: center;
+
+    .loading-inner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .anticon {
+        font-size: 34px;
+    }
+}
