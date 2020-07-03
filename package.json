@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --ignore 'src/'",
     "start": "webpack-dev-server --open",
-    "build": "webpack"
+    "build": "webpack",
+    "heroku-postbuild": "npm run build",
+    "production": "node index.js"
   },
   "author": "",
   "license": "ISC",
