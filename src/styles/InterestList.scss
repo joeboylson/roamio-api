@@ -1,7 +1,18 @@
-#interest-list{
-    .ant-table-container {
-        border-top: 1px solid #ebebeb;
-        border-left: 1px solid #ebebeb;
-        border-right: 1px solid #ebebeb;
-    }
+@import "main.scss";
+
+#interest-list {
+  margin-top: 24px;
+}
+
+#interest-list-header {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 12px;
+}
+
+#data-table {
+  .row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

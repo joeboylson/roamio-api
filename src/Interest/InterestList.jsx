@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import Loading from '../Loading/Loading';
 import { useHistory } from "react-router-dom";
-import { PageHeader, Table, message } from 'antd';
 
 import '../styles/InterestList.scss'
-const InterestList = (props) => {
 
-  const { setLoading } = props;
+const InterestList = () => {
+
   const history = useHistory();
-  const [dataSource, setDataSource] = React.useState(null);
+  const [loading, setLoading] = useState(false);
+  const [dataSource, setDataSource] = useState(null);
 
   const fetchAllInterests = () => {
     setLoading(true)
@@ -22,7 +23,7 @@ const InterestList = (props) => {
       }
 
       if (!results.data.success) {
-        message.error('Error getting interest data')
+        alert('Error getting interest data')
         return;
       }
 
@@ -32,7 +33,7 @@ const InterestList = (props) => {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!dataSource) {
         fetchAllInterests()
     }
@@ -61,26 +62,36 @@ const InterestList = (props) => {
     },
   ];
 
-
+  if (loading) return <Loading/>
 
   return (
     <div id="interest-list">
-      <PageHeader
-        title="Interest List"
-        extra={[
-          <a key={'0'} href="/api/download/interests" download>DOWNLOAD CSV</a>,
-        ]}
-      >
 
-        <Table 
-          dataSource={dataSource} 
-          columns={columns}
-          rowKey={record => record.id}
-          pagination={false}
-          size={'middle'}
-        />
+      <div id={"interest-list-header"}>
+        <a 
+          id={'download-link'} 
+          className={'link-like-button'} 
+          href="/api/download/interests" 
+          download
+        >DOWNLOAD CSV</a>
+      </div>
 
-      </PageHeader>
+      <div id={'data-table'}>
+        <div class={'row'}>
+          <b>Email</b>
+          <b>Text</b>
+          <b>Interest</b>
+        </div>
+        
+        { dataSource && dataSource.map((i, index) => (
+          <div class={'row'} key={index}>
+            <p>{i.email}</p>
+            <p>{i.text}</p>
+            <p>{i.interest}</p>
+          </div>
+        ))}
+      </div>
+
     </div>
   )
 }

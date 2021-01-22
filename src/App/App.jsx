@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import 'antd/dist/antd.css'
-
 // components
 import DashBoard from '../DashBoard/DashBoard';
 import Login from '../Login/Login';
@@ -16,7 +14,9 @@ const App = () => {
           <Route path="/login" component={Login}/>
 
           <Route path="/">
-            <DashBoard Component={InterestList}/>
+            <DashBoard>
+              <InterestList/>
+            </DashBoard>
           </Route>
 
         </Switch>

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import { Form, Input, Button, message } from 'antd';
 import { useHistory } from "react-router-dom";
 
 import '../styles/Login.scss'
@@ -9,13 +8,20 @@ const Login = () => {
 
     const history = useHistory();
 
-    const login = (values) => {
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+
+    const handleLogin = (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+
         const url = '/api/login'
 
-        axios.post(url, values)
+        axios.post(url, {username, password})
         .then(response => {
             if (!response.data || !response.data.success) {
-                message.error("Invalid username or password")
+                alert("Invalid username or password")
                 return;
             }
 
@@ -23,38 +29,14 @@ const Login = () => {
         })
     }
 
-    const loginFailed = () => message.error("Invalid username or password")
-
     return (
         <div id={'login'}>
 
-            <Form
-                layout={'vertical'}
-                name={'basic'}
-                initialValues={{ remember: true }}
-                onFinish={login}
-                onFinishFailed={loginFailed}
-            >
-                <Form.Item
-                    label={'Username'}
-                    name={'username'}
-                    rules={[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label={'Password'}
-                    name={'password'}
-                    rules={[{ required: true,  }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item>
-                    <Button type={'primary'} htmlType={'submit'}>Submit</Button>
-                </Form.Item>
-            </Form>
+            <form id={'login-form'}>
+                <input type="text" onChange={e => setUsername(e.target.value)}/>
+                <input type="password" onChange={e => setPassword(e.target.value)}/>
+                <button onClick={handleLogin}>Submit</button>
+            </form>
 
         </div>
     )

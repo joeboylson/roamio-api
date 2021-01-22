@@ -1,31 +1,19 @@
+@import "main.scss";
+
 #dashboard {
-    display: flex;
+  margin: 24px auto;
+  width: 100%;
+}
 
-    #menu {
+#dashboard-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
-        $menu-width: 20%;
-
-        flex: 0 0 $menu-width;
-
-        #menu-inner {
-            position: fixed;
-            width: $menu-width;
-
-            #menu-inner-header {
-                margin-left: 24px;
-                height: 68px;
-                display: flex;
-                align-items: center;
-            }
-
-            .ant-list {
-                height: calc(100vh - 89px);
-                margin-left: 24px;
-            }
-        }
-    }
-
-    #component-wrapper {
-        flex: 0 0 80%;
-    }
+#nav {
+  height: 36px;  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
