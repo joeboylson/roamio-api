@@ -121,6 +121,7 @@ router.post('/interests', async (req, res) => {
 
         let data = req.body.map(item => {
             return {
+                id: item.id,
                 interest_id: item.id,
                 text: item.text,
                 interest: item.interest,
