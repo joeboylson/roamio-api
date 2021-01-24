@@ -2,8 +2,9 @@
 
 const router = require('express').Router();
 const passport = require('passport');
-const { isEqual } = require('lodash')
 const csvStringify = require('csv-stringify');
+const { v4: uuidv4 } = require('uuid');
+const { isEqual } = require('lodash')
 const { Interest } = require('./models/model');
 const { userIsLoggedIn } = require('./security/security');
 const { DataResponse } = require('./config');
@@ -102,26 +103,32 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/interests', async (req, res) => {
 
-    const errorResponse = new DataResponse(
-        success=false,
-        data=null,
-        message="Invalid input",
-        error="Invalid input"
+    const errorResponse = (message, error) => new DataResponse(
+        success = false,
+        data = null,
+        message = message || "Invalid input",
+        error = error || "Invalid input"
     );
 
     try {
-        
-        if (!req.body) res.send(errorResponse)
+
+
+        if (!req.body) return res.send(errorResponse(message="No body in request"))
 
         const inputIsValid = req.body.every(item => {
-            return isEqual( Object.keys(item).sort(), ['id', 'text', 'interest'] );
+            const _hasId = item.hasOwnProperty('id')
+            const _hasText = item.hasOwnProperty('text')
+            const _hasInterest = item.hasOwnProperty('interest')
+            const itemIsValid = _hasId && _hasText && _hasInterest 
+
+            return itemIsValid
         })
 
-        if (!inputIsValid) res.send(errorResponse)
+        if (!inputIsValid) return res.send(errorResponse())
 
         let data = req.body.map(item => {
             return {
-                id: item.id,
+                id: uuidv4(),
                 interest_id: item.id,
                 text: item.text,
                 interest: item.interest,
@@ -129,7 +136,7 @@ router.post('/interests', async (req, res) => {
         })
 
         Interest.bulkCreate(data).then( () => {
-            res.send( new DataResponse(
+            return res.send( new DataResponse(
                 success=true,
                 data=null,
                 message="Thank you",
@@ -138,7 +145,8 @@ router.post('/interests', async (req, res) => {
         })
 
     } catch (e) {
-        res.send(errorResponse)
+        console.log(e)
+        return res.send(errorResponse(error=e))
     }
 })
 

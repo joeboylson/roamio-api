@@ -13,7 +13,7 @@ class Interest extends Model {}
 
 Interest.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     primaryKey: true
   },
   email: DataTypes.STRING,
