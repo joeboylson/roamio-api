@@ -4,7 +4,6 @@ const router = require('express').Router();
 const passport = require('passport');
 const csvStringify = require('csv-stringify');
 const { v4: uuidv4 } = require('uuid');
-const { isEqual } = require('lodash')
 const { Interest } = require('./models/model');
 const { userIsLoggedIn } = require('./security/security');
 const { DataResponse } = require('./config');
